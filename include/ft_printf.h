@@ -13,11 +13,29 @@
 # define FT_PRINTF_H
 
 # include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
 # include <stdarg.h>
-# include "libft.h"
+# include <stdlib.h>
 
-int		ft_printf(const char *restrict format, ...);
+typedef struct s_str
+{
+	int		len;
+	int		width;
+}	t_str;
+
+int				ft_printf(const char *format, ...);
+int				ft_intlen(int nb, char c);
+void			ft_printhexa(unsigned int x);
+const char		*ft_read_text(t_str *s, const char *f);
+const char		*ft_search_arg(va_list arg, const char *f, t_str *s);
+
+void			ft_putstr(char *str);
+void			ft_putchar(char c);
+void			ft_putnbr(int nb);
+int				ft_strlen_pf(char *str);
+char			*ft_strrchr_pf(const char *str, int c);
+
+void			ft_printf_d(va_list arg, const char *f, t_str *s);
+void			ft_printf_s(va_list arg, t_str *s);
+void			ft_printf_x(va_list arg, const char *f, t_str *s);
 
 #endif

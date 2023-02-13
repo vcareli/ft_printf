@@ -1,37 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_printf_args.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vinvieir <vinvieir@student.42quebec.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/07 16:32:43 by vinvieir          #+#    #+#             */
+/*   Created: 2022/02/09 16:32:43 by vinvieir          #+#    #+#             */
 /*   Updated: 2022/02/09 14:13:35 by vinvieir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
 
-int	ft_printf(const char *format, ...)
+void	ft_printf_d(va_list arg, const char *f, t_str *s)
 {
-	va_list		arg;
-	t_str		str;
+	int d = va_arg(arg, int);
+	ft_putnbr(d);
+	s->len += ft_intlen(d, *f);
+}
 
-	str.len = 0;
-	str.width = 0;
-	va_start(arg, format);
-	while (*format)
-	{
-		if (*format == '%')
-			format = ft_search_arg(arg, format + 1, &str);
-		else
-			format = ft_read_text(&str, format);
-		if (!format)
+void	ft_printf_s(va_list arg, t_str *s)
+{
+	char *chr = va_arg(arg, char *);
+		if (!chr)
 		{
 			ft_putstr("(null)");
-			va_end(arg);
-			return (str.len);
+			s->len += ft_strlen_pf("(null)");
 		}
-	}
-	va_end(arg);
-	return (str.len);
+		else
+		{
+			ft_putstr(chr);
+			s->len += ft_strlen_pf(chr);
+		}
+}
+
+void	ft_printf_x(va_list arg, const char *f, t_str *s)
+{
+	unsigned int x = va_arg(arg, unsigned int);
+	ft_printhexa((unsigned long)x);
+	s->len += ft_intlen((int)x, *f);
 }

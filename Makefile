@@ -24,7 +24,7 @@ WHITE = \033[0;97m
 
 #Sources
 
-SRC_FILES	=	ft_printf ft_printf_utils ft_print_ptr ft_print_unsigned ft_print_hex
+SRC_FILES	=	ft_printf ft_printf_utils ft_printf_put ft_printf_args
 
 
 SRC 		= 	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
@@ -41,11 +41,11 @@ $(NAME):	$(OBJ)
 			@cp libft/libft.a .
 			@mv libft.a $(NAME)
 			@$(AR) $(NAME) $(OBJ)
-			@echo "$(GREEN)ft_printf compiled!$(DEF_COLOR)"
+			@echo "$(GREEN)ft_printf compilé!$(DEF_COLOR)"
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJF)
-			@echo "$(YELLOW)Compiling: $< $(DEF_COLOR)"
-			@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+			@echo "$(YELLOW)Compilation $< $(DEF_COLOR)"
+			@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@ 
 
 $(OBJF):
 			@mkdir -p $(OBJ_DIR)
@@ -53,16 +53,16 @@ $(OBJF):
 clean:
 			@$(RM) -rf $(OBJ_DIR)
 			@make clean -C $(LIBFT)
-			@echo "$(BLUE)ft_printf object files cleaned!$(DEF_COLOR)"
+			@echo "$(BLUE)ft_printf fichier objet nettoyés!$(DEF_COLOR)"
 
 fclean:		clean
 			@$(RM) -f $(NAME)
 			@$(RM) -f $(LIBFT)/libft.a
-			@echo "$(CYAN)ft_printf executable files cleaned!$(DEF_COLOR)"
-			@echo "$(CYAN)libft executable files cleaned!$(DEF_COLOR)"
+			@echo "$(CYAN)ft_printf fichiers exécutables nettoyés!$(DEF_COLOR)"
+			@echo "$(CYAN)libft fichiers exécutables nettoyés!$(DEF_COLOR)"
 
 re:			fclean all
-			@echo "$(GREEN)Cleaned and rebuilt everything for ft_printf!$(DEF_COLOR)"
+			@echo "$(GREEN)Tout nettoyé et reconstruit pour ft_printf!$(DEF_COLOR)"
 
 norm:
 			@norminette $(SRC) $(INCLUDE) $(LIBFT) | grep -v Norme -B1 || true
