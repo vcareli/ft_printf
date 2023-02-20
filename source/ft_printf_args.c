@@ -13,31 +13,35 @@
 
 void	ft_printf_d(va_list arg, const char *f, t_str *s)
 {
-	int d = va_arg(arg, int);
+	int	d;
+
+	d = va_arg(arg, int);
 	ft_putnbr(d);
 	s->len += ft_intlen(d, *f);
-	
 }
 
 void	ft_printf_s(va_list arg, t_str *s)
 {
-	char *chr = va_arg(arg, char *);
-		if (!chr)
-		{
-			ft_putstr("(null)");
-			s->len += ft_strlen_pf("(null)");
-		}
-		else
-		{
-			ft_putstr(chr);
-			s->len += ft_strlen_pf(chr);
-		}
+	char	*chr;
+
+	chr = va_arg(arg, char *);
+	if (!chr)
+	{
+		ft_putstr("(null)");
+		s->len += ft_strlen_pf("(null)");
+	}
+	else
+	{
+		ft_putstr(chr);
+		s->len += ft_strlen_pf(chr);
+	}
 }
 
 void	ft_printf_x(va_list arg, const char *f, t_str *s)
 {
-	unsigned int x = va_arg(arg, unsigned int);
+	unsigned int	x;
 
+	x = va_arg(arg, unsigned int);
 	if (x == 0)
 	{
 		write(1, "0", 1);
@@ -56,7 +60,7 @@ void	ft_print_c(va_list arg, t_str *s)
 	s->len += 1;
 }
 
-void	ft_printf_u(va_list arg, const char *f, t_str *s)
+void	ft_printf_u(va_list arg, t_str *s)
 {
 	unsigned int	u;
 	char			*num;
@@ -66,7 +70,7 @@ void	ft_printf_u(va_list arg, const char *f, t_str *s)
 		write(1, "0", 1);
 	else
 	{
-		num = ft_uitoa(u, f);
+		num = ft_uitoa(u);
 		ft_putstr(num);
 		free(num);
 	}

@@ -20,12 +20,12 @@ void	ft_putstr(char *str)
 	}
 }
 
-char	*ft_uitoa(unsigned int n, const char *f)
+char	*ft_uitoa(unsigned int n)
 {
 	int		len;
 	char	*num;
 
-	len = ft_intlen(n, *f);
+	len = ft_len_u(n);
 	num = ft_calloc(len + 1, sizeof(char));
 	if (!num)
 		return (NULL);
@@ -38,12 +38,13 @@ char	*ft_uitoa(unsigned int n, const char *f)
 	return (num);
 }
 
-int		ft_intlen(int nb, char c)
+int	ft_intlen(int nb, char c)
 {
-	int	i = 0;
+	int	i;
 	int	number;
 	int	neg;
 
+	i = 0;
 	neg = 0;
 	number = nb;
 	if (nb < 0)
@@ -68,13 +69,14 @@ void	ft_printhexa(unsigned int x, const char *f, t_str *s)
 {
 	if (x >= 16)
 	{
-		ft_printhexa(x/16, f, s);
-		ft_printhexa(x%16, f, s);
+		ft_printhexa(x / 16, f, s);
+		ft_printhexa(x % 16, f, s);
 	}
 	else
+	{
 		if (x <= 9)
 		{
-			ft_putchar_fd(x + '0', 1);
+			ft_putchar_fd((x + '0'), 1);
 			s->len += 1;
 		}
 		else
@@ -85,10 +87,10 @@ void	ft_printhexa(unsigned int x, const char *f, t_str *s)
 				ft_putchar_fd(x - 10 + 'A', 1);
 			s->len += 1;
 		}
-		
+	}
 }
 
-int		ft_len_u(unsigned int nb)
+int	ft_len_u(unsigned int nb)
 {
 	int	i;
 

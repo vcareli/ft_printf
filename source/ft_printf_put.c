@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 #include "ft_printf.h"
 
-
 void	ft_putnbr(int nb)
 {
 	if (nb == -2147483648)
@@ -35,7 +34,7 @@ void	ft_putnbr(int nb)
 		ft_putchar_fd(nb + '0', 1);
 }
 
-int		ft_strlen_pf(char *str)
+int	ft_strlen_pf(char *str)
 {
 	int	total;
 

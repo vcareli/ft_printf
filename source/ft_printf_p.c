@@ -33,7 +33,7 @@ void	ft_putp(unsigned long long p)
 		ft_putp(p / 16);
 		ft_putp(p % 16);
 	}
-	else if (p < 10) 
+	else if (p < 10)
 		ft_putchar_fd(p + '0', 1);
 	else if (p > 9)
 		ft_putchar_fd(p - 10 + 'a', 1);
