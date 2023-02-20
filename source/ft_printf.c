@@ -13,17 +13,17 @@
 
 const char	*ft_search_arg(va_list arg, const char *f, t_str *s)
 {
-	if (*f == 'c')	//ok
+	if (*f == 'c')											//ok
 		ft_print_c(arg, s);
-	else if (*f == 's')	//ok
+	else if (*f == 's')										//ok
 		ft_printf_s(arg, s);
-	else if (*f == 'p')
+	else if (*f == 'p')										//ok
 		ft_printf_p(va_arg(arg, unsigned long long), s);
-	else if (*f == 'd' || *f == 'i')	//ok
+	else if (*f == 'd' || *f == 'i')						//ok
 		ft_printf_d(arg, f, s);
-	else if (*f == 'u')
+	else if (*f == 'u')										//nao ok
 		ft_printf_u(arg, f, s);
-	else if (*f == 'x' || *f == 'X')	//ok
+	else if (*f == 'x' || *f == 'X')						//ok
 		ft_printf_x(arg, f, s);
 	else if (*f == '%')		//ok
 	{

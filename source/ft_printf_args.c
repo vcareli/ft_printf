@@ -16,6 +16,7 @@ void	ft_printf_d(va_list arg, const char *f, t_str *s)
 	int d = va_arg(arg, int);
 	ft_putnbr(d);
 	s->len += ft_intlen(d, *f);
+	
 }
 
 void	ft_printf_s(va_list arg, t_str *s)
@@ -69,6 +70,5 @@ void	ft_printf_u(va_list arg, const char *f, t_str *s)
 		ft_putstr(num);
 		free(num);
 	}
-	s->len += ft_intlen(u, *f);
-
+	s->len += ft_len_u(u);
 }
