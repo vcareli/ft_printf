@@ -70,4 +70,5 @@ void	ft_printf_u(va_list arg, const char *f, t_str *s)
 		free(num);
 	}
 	s->len += ft_intlen(u, *f);
+
 }

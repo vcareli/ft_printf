@@ -24,7 +24,7 @@ WHITE = \033[0;97m
 
 #Sources
 
-SRC_FILES	=	ft_printf ft_printf_utils ft_printf_put ft_printf_args
+SRC_FILES	=	ft_printf ft_printf_utils ft_printf_put ft_printf_args ft_printf_p
 
 
 SRC 		= 	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))

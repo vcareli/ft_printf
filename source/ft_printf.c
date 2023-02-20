@@ -18,7 +18,7 @@ const char	*ft_search_arg(va_list arg, const char *f, t_str *s)
 	else if (*f == 's')	//ok
 		ft_printf_s(arg, s);
 	else if (*f == 'p')
-		return (NULL);
+		ft_printf_p(va_arg(arg, unsigned long long), s);
 	else if (*f == 'd' || *f == 'i')	//ok
 		ft_printf_d(arg, f, s);
 	else if (*f == 'u')

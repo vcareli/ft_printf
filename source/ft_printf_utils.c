@@ -26,16 +26,18 @@ char	*ft_uitoa(unsigned int n, const char *f)
 	char	*num;
 
 	len = ft_intlen(n, *f);
-	num = (char *)malloc(sizeof(char) * (len + 1));
+	num = (char *)calloc((len + 1), sizeof(char));
 	if (!num)
 		return (0);
 	num[len] = '\0';
+	len--;
 	while (n != 0)
 	{
-		num[len - 1] = n % 10 + 48;
-		n = n / 10;
+		num[len] = (n % 10) + '0';
+		n /= 10;
 		len--;
 	}
+	//num[0] = (n % 10) + '0';
 	return (num);
 }
 
@@ -45,18 +47,15 @@ int		ft_intlen(int nb, char c)
 	int	number;
 	int	neg;
 
-	if (!nb)
-		return (1);
+	neg = 0;
+	number = nb;
 	if (nb < 0)
 	{
 		neg = 1;
 		number = -nb;
 	}
-	else
-	{
-		neg = 0;
-		number = nb;
-	}
+	else if (nb == 0)
+		i = 1;
 	if (c == 'd' || c == 'i' || c == 'u')
 	{
 		while (number)
@@ -64,18 +63,8 @@ int		ft_intlen(int nb, char c)
 			number /= 10;
 			i++;
 		}
-		return (i + neg);
 	}
-	if (c == 'x')
-	{
-		while (number)
-		{
-			number /= 16;
-			i++;
-		}
-		return (i);
-	}
-	return (0);	
+	return (i + neg);
 }
 
 void	ft_printhexa(unsigned int x, const char *f, t_str *s)

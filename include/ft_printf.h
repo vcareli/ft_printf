@@ -41,4 +41,8 @@ char			*ft_uitoa(unsigned int n, const char *f);
 int				ft_intlen(int nb, char c);
 void			ft_printhexa(unsigned int x, const char *f, t_str *s);
 
+void			ft_printf_p(unsigned long long p, t_str *s);
+void			ft_putp(unsigned long long p);
+int				ft_plen(int p);
+
 #endif
