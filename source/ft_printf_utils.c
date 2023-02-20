@@ -10,9 +10,36 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
-#include "libft.h"
 
-int	ft_intlen(int nb, char c)
+void	ft_putstr(char *str)
+{
+	while (*str)
+	{
+		write(1, str, 1);
+		str++;
+	}
+}
+
+char	*ft_uitoa(unsigned int n, const char *f)
+{
+	int		len;
+	char	*num;
+
+	len = ft_intlen(n, *f);
+	num = (char *)malloc(sizeof(char) * (len + 1));
+	if (!num)
+		return (0);
+	num[len] = '\0';
+	while (n != 0)
+	{
+		num[len - 1] = n % 10 + 48;
+		n = n / 10;
+		len--;
+	}
+	return (num);
+}
+
+int		ft_intlen(int nb, char c)
 {
 	int	i = 0;
 	int	number;
@@ -30,7 +57,7 @@ int	ft_intlen(int nb, char c)
 		neg = 0;
 		number = nb;
 	}
-	if (c == 'd')
+	if (c == 'd' || c == 'i' || c == 'u')
 	{
 		while (number)
 		{
@@ -51,58 +78,26 @@ int	ft_intlen(int nb, char c)
 	return (0);	
 }
 
-void	ft_printhexa(unsigned int x)
+void	ft_printhexa(unsigned int x, const char *f, t_str *s)
 {
-	char	*hexa = "0123456789abcdef";
-	int		res[100];
-	int		i = 0;
-
-	while (x >= 16)
+	if (x >= 16)
 	{
-		res[1] = hexa[x % 16];
-		x = x / 16;
-		i++;
-	}
-	res[i] = hexa[x];
-	while (i >= 0)
-	{
-		ft_putnbr(res[i]);
-		i--;
-	}
-}
-
-const char	*ft_read_text(t_str *s, const char *f)
-{
-	char	*prox;
-
-	prox = ft_strrchr_pf((char *)f, '%');
-	if (prox)
-		s->width = prox - f;
-	else
-		s->width = ft_strlen_pf((char *)f);
-	write(1, f, s->width);
-	s->len += s->width;
-	while (*f && *f != '%')
-		++f;
-	return (f);
-}
-
-const char	*ft_search_arg(va_list arg, const char *f, t_str *s)
-{
-	if (*f == 'd')
-	{
-		ft_printf_d(arg, f, s);
-	}
-	else if (*f == 's')
-	{
-		ft_printf_s(arg, s);
-	}
-	else if (*f == 'x')
-	{
-		ft_printf_x(arg, f, s);
+		ft_printhexa(x/16, f, s);
+		ft_printhexa(x%16, f, s);
 	}
 	else
-		return (NULL);
-	f++;
-	return (f);
+		if (x <= 9)
+		{
+			ft_putchar_fd(x + '0', 1);
+			s->len += 1;
+		}
+		else
+		{
+			if (*f == 'x')
+				ft_putchar_fd(x - 10 + 'a', 1);
+			if (*f == 'X')
+				ft_putchar_fd(x - 10 + 'A', 1);
+			s->len += 1;
+		}
+		
 }

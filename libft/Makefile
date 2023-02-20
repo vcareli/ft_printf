@@ -1,28 +1,9 @@
-#Standard
+CC = gcc
 
-NAME		=	libft.a
-INCLUDES	=	../include
-SRCS_DIR 	=	src/
-OBJS_DIR	=	obj/
-CC			=	gcc
-CFLAGS		=	-Wall -Werror -Wextra -I
-RM			=	rm -f
-AR			=	ar rcs
+CFLAGS = -Wall -Werror -Wextra -I ../include
 
-#Colors
 
-DEF_COLOR = \033[0;39m
-GRAY = \033[0;90m
-RED = \033[0;91m
-GREEN = \033[0;92m
-YELLOW = \033[0;93m
-BLUE = \033[0;94m
-MAGENTA = \033[0;95m
-CYAN = \033[0;96m
-WHITE = \033[0;97m
-
-#Sources
-
+NAME = libft.a
 
 SRC =	ft_bzero.c \
 		ft_atoi.c \
@@ -70,46 +51,39 @@ SRC_BONUS =	ft_lstnew.c \
 			ft_lstiter.c \
 			ft_lstmap.c \
 
-SRCS 		= 	$(SRCS_DIR), $(addsuffix .c, $(SRC_FILES))
-OBJS 		= 	$(addprefix $(OBJS_DIR), $(addsuffix .o, $(SRC_FILES)))
+OBJ = $(SRC:.c=.o)
 
-###
+OBJ_BONUS = $(OBJ) $(SRC_BONUS:.c=.o)
 
-OBJSF		=	.cache_exists
+%.o: %.c
+	@$(CC) $(CFLAGS) -c $<
+	@echo "\033[90m[\033[32mOK\033[90m]\033[34m Compiling $<\033[0m"
 
-all:		$(NAME)
+$(NAME): $(OBJ) $(HDRS)
+	@ar rc $(NAME) $(OBJ)
+	@ranlib $(NAME)
+	@echo "\033[90m[\033[32mSuccess\033[90m]\033[32m Successfully compiled Libft.\033[0m"
 
-$(NAME):	$(OBJS)
-			@$(AR) $(NAME) $(OBJS)
-			@ranlib $(NAME)
-			@echo "$(GREEN)Libft compiled!$(DEF_COLOR)"
+so:
+	$(CC) -nostartfiles -shared -o libft.so $(OBJ)
 
-$(OBJS_DIR)%.o : $(SRCS_DIR)%.c | $(OBJSF)
-			@echo "$(YELLOW)Compiling: $< $(DEF_COLOR)"
-			@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+bonus: $(OBJ_BONUS) $(HDRS)
+	@ar r $(NAME) $(OBJ_BONUS)
+	@ranlib $(NAME)
+	@echo "\033[90m[\033[32mSuccess\033[90m]\033[32m Successfully compiled Libft with Bonus.\033[0m"
 
-$(OBJSF):
-			@mkdir -p $(OBJS_DIR)
-			@mkdir -p $(OBJS_DIR)$(FTIS_DIR)
-			@mkdir -p $(OBJS_DIR)$(FTMEM_DIR)
-			@mkdir -p $(OBJS_DIR)$(FTPUT_DIR)
-			@mkdir -p $(OBJS_DIR)$(FTTO_DIR)
-			@mkdir -p $(OBJS_DIR)$(FTSTR_DIR)
-			@mkdir -p $(OBJS_DIR)$(FTLST_DIR)
+all: $(NAME)
 
 clean:
-			@$(RM) -rf $(OBJS_DIR)
-			@$(RM) -f $(OBJSF)
-			@echo "$(BLUE)libft objects files cleaned!$(DEF_COLOR)"
+	@rm -f $(OBJ)
+	@rm -f $(OBJ_BONUS)
+	@echo "\033[90m[\033[91mDeleting\033[90m]\033[31m Object files deleted\033[0m"
 
-fclean:		clean
-			@$(RM) -f $(NAME)
-			@echo "$(CYAN)libft executable files cleaned!$(DEF_COLOR)"
+fclean: clean
+	@rm -f $(NAME)
+	@rm -f libft.so
+	@echo "\033[90m[\033[91mDeleting\033[90m]\033[31m Libft.a deleted.\033[0m"
 
-re:			fclean all
-			@echo "$(GREEN)Cleaned and rebuilt everything for libft!$(DEF_COLOR)"
+re: fclean all
 
-norm:
-	@norminette $(SRCS) $(INCLUDES) | grep -v Norme -B1 || true
-
-.PHONY:		all clean fclean re norm
+.PHONY: clean fclean re

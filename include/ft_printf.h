@@ -14,7 +14,8 @@
 
 # include <unistd.h>
 # include <stdarg.h>
-# include <stdlib.h>
+//# include <stdlib.h>
+#include "libft.h"
 
 typedef struct s_str
 {
@@ -23,19 +24,21 @@ typedef struct s_str
 }	t_str;
 
 int				ft_printf(const char *format, ...);
-int				ft_intlen(int nb, char c);
-void			ft_printhexa(unsigned int x);
-const char		*ft_read_text(t_str *s, const char *f);
 const char		*ft_search_arg(va_list arg, const char *f, t_str *s);
-
-void			ft_putstr(char *str);
-void			ft_putchar(char c);
-void			ft_putnbr(int nb);
-int				ft_strlen_pf(char *str);
-char			*ft_strrchr_pf(const char *str, int c);
 
 void			ft_printf_d(va_list arg, const char *f, t_str *s);
 void			ft_printf_s(va_list arg, t_str *s);
 void			ft_printf_x(va_list arg, const char *f, t_str *s);
+void			ft_print_c(va_list arg, t_str *s);
+void			ft_printf_u(va_list arg, const char *f, t_str *s);
+
+void			ft_putnbr(int nb);
+int				ft_strlen_pf(char *str);
+char			*ft_strrchr_pf(const char *str, int c);
+
+void			ft_putstr(char *str);
+char			*ft_uitoa(unsigned int n, const char *f);
+int				ft_intlen(int nb, char c);
+void			ft_printhexa(unsigned int x, const char *f, t_str *s);
 
 #endif

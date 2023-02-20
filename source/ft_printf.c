@@ -11,6 +11,29 @@
 /* ************************************************************************** */
 #include "ft_printf.h"
 
+const char	*ft_search_arg(va_list arg, const char *f, t_str *s)
+{
+	if (*f == 'c')	//ok
+		ft_print_c(arg, s);
+	else if (*f == 's')	//ok
+		ft_printf_s(arg, s);
+	else if (*f == 'p')
+		return (NULL);
+	else if (*f == 'd' || *f == 'i')	//ok
+		ft_printf_d(arg, f, s);
+	else if (*f == 'u')
+		ft_printf_u(arg, f, s);
+	else if (*f == 'x' || *f == 'X')	//ok
+		ft_printf_x(arg, f, s);
+	else if (*f == '%')		//ok
+	{
+		ft_putchar_fd(*f, 1);
+		s->len += 1;
+	}
+	f++;
+	return (f);
+}
+
 int	ft_printf(const char *format, ...)
 {
 	va_list		arg;
@@ -24,7 +47,11 @@ int	ft_printf(const char *format, ...)
 		if (*format == '%')
 			format = ft_search_arg(arg, format + 1, &str);
 		else
-			format = ft_read_text(&str, format);
+		{
+			write(1, format, 1);
+			str.len += 1;
+			format++;
+		}
 		if (!format)
 		{
 			ft_putstr("(null)");

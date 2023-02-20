@@ -36,6 +36,38 @@ void	ft_printf_s(va_list arg, t_str *s)
 void	ft_printf_x(va_list arg, const char *f, t_str *s)
 {
 	unsigned int x = va_arg(arg, unsigned int);
-	ft_printhexa((unsigned long)x);
-	s->len += ft_intlen((int)x, *f);
+
+	if (x == 0)
+	{
+		write(1, "0", 1);
+		s->len += 1;
+	}
+	else
+		ft_printhexa((unsigned long)x, f, s);
+}
+
+void	ft_print_c(va_list arg, t_str *s)
+{
+	int	c;
+
+	c = va_arg(arg, long int);
+	write(1, &c, 1);
+	s->len += 1;
+}
+
+void	ft_printf_u(va_list arg, const char *f, t_str *s)
+{
+	unsigned int	u;
+	char			*num;
+
+	u = va_arg(arg, unsigned int);
+	if (u == 0)
+		write(1, "0", 1);
+	else
+	{
+		num = ft_uitoa(u, f);
+		ft_putstr(num);
+		free(num);
+	}
+	s->len += ft_intlen(u, *f);
 }
