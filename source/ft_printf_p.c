@@ -39,14 +39,14 @@ void	ft_putp(unsigned long long p)
 		ft_putchar_fd(p - 10 + 'a', 1);
 }
 
-void	ft_printf_p(unsigned long long p, t_str *s)
+void    ft_printf_p(unsigned long long p, t_str *s)
 {
-	if (p == 0)
-		s->len += write(1, "(nil)", 5);
-	else
-	{
-		s->len += write(1, "0x", 2);
-		ft_putp(p);
-		s->len += ft_plen(p);
-	}
+    s->len += write(1, "0x", 2);
+    if (p == 0)
+        s->len += write(1, "0", 1);
+    else
+    {
+        ft_putp(p);
+        s->len += ft_plen(p);
+    }
 }
